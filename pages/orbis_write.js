@@ -6,56 +6,30 @@ import { Orbis } from '@orbisclub/orbis-sdk';
 let orbis = new Orbis();
 
 const orbis_write = () => {
-	/** Calls the Orbis SDK and handle the results */
-	async function connectWithOrbis() {
-		let res = await orbis.connect_v2({
-			provider: window.ethereum,
-			lit: true,
-		});
-		console.log('res is : ', res);
-		/** Check if connection is successful or not */
-		if (res.status == 200) {
-			setUser(res.did);
-		} else {
-			console.log('Error connecting to Ceramic: ', res);
-			alert('Error connecting to Ceramic.');
-		}
-	}
-
-	const checkIfUserIsConnectedWithOrbis = async () => {
+	const createPost = async () => {
 		let res = await orbis.isConnected();
-		console.log('res is:', res);
+		if (!res) {
+			await orbis.connect_v2({
+				provider: window.ethereum,
+				lit: true,
+			});
+		}
+		/** To create a post in the 'gm' channel of the orbis group */
+		let myFirstPost = await orbis.createPost({
+			body: 'Drift is on the way 🚀🔥',
+			context: 'my-first-post',
+		});
+		console.log('successfully posted: ', myFirstPost);
 	};
 
-	const logoutOrbis = async () => {
-		let res = await orbis.logout();
-		console.log('you have been successfully logged out.');
-		console.log('res: ', res);
-	};
-    
 	return (
 		<div className="mx-4 my-10 flex justify-center items-center flex-col">
 			<div className="text-4xl my-5 text-blue-500 text-center font-bold underline">
-				Orbis - Utils (connect, isConnected, logout)
+				Orbis - write (create post)
 			</div>
 			<div className="my-4">
-				<Button shadow color="primary" auto onClick={connectWithOrbis}>
-					connect
-				</Button>
-			</div>
-			<div className="my-4">
-				<Button
-					shadow
-					color="warning"
-					auto
-					onClick={checkIfUserIsConnectedWithOrbis}
-				>
-					Is Connected
-				</Button>
-			</div>
-			<div className="my-4">
-				<Button shadow color="error" auto onClick={logoutOrbis}>
-					logout
+				<Button shadow color="primary" auto onPress={createPost}>
+					create post
 				</Button>
 			</div>
 		</div>

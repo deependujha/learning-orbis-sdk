@@ -47,7 +47,7 @@ export default function App() {
 			Orbis - Utils (connect, isConnected, logout)
 		</div>
 			<div className="my-4">
-				<Button shadow color="primary" auto onClick={connectWithOrbis}>
+				<Button shadow color="primary" auto onPress={connectWithOrbis}>
 					connect
 				</Button>
 			</div>
@@ -56,13 +56,13 @@ export default function App() {
 					shadow
 					color="warning"
 					auto
-					onClick={checkIfUserIsConnectedWithOrbis}
+					onPress={checkIfUserIsConnectedWithOrbis}
 				>
 					Is Connected
 				</Button>
 			</div>
 			<div className="my-4">
-				<Button shadow color="error" auto onClick={logoutOrbis}>
+				<Button shadow color="error" auto onPress={logoutOrbis}>
 					logout
 				</Button>
 			</div>
