@@ -19,7 +19,68 @@ const orbis_write = () => {
 			body: 'Drift is on the way 🚀🔥',
 			context: 'my-first-post',
 		});
+		// "kjzl6cwe1jw14910vywupkzi11miprilhjx6zr1mmqsv06ewuxtm3q1haewscmc"
 		console.log('successfully posted: ', myFirstPost);
+	};
+
+	const getPost = async () => {
+		let res = await orbis.isConnected();
+		if (!res) {
+			await orbis.connect_v2({
+				provider: window.ethereum,
+				lit: true,
+			});
+		}
+
+		let { data, error } = await orbis.getPost(
+			'kjzl6cwe1jw14910vywupkzi11miprilhjx6zr1mmqsv06ewuxtm3q1haewscmc'
+		);
+
+		console.log('fetched data is:', data);
+		console.log('errror is: ', error);
+	};
+
+	const likePost = async () => {
+		let res = await orbis.isConnected();
+		if (!res) {
+			await orbis.connect_v2({
+				provider: window.ethereum,
+				lit: true,
+			});
+		}
+		let result = await orbis.react(
+			'kjzl6cwe1jw14910vywupkzi11miprilhjx6zr1mmqsv06ewuxtm3q1haewscmc',
+			'like'
+		);
+		console.log('result is: ', result);
+	};
+	const hahaPost = async () => {
+		let res = await orbis.isConnected();
+		if (!res) {
+			await orbis.connect_v2({
+				provider: window.ethereum,
+				lit: true,
+			});
+		}
+		let result = await orbis.react(
+			'kjzl6cwe1jw14910vywupkzi11miprilhjx6zr1mmqsv06ewuxtm3q1haewscmc',
+			'haha'
+		);
+		console.log('result is: ', result);
+	};
+	const downvotePost = async () => {
+		let res = await orbis.isConnected();
+		if (!res) {
+			await orbis.connect_v2({
+				provider: window.ethereum,
+				lit: true,
+			});
+		}
+		let result = await orbis.react(
+			'kjzl6cwe1jw14910vywupkzi11miprilhjx6zr1mmqsv06ewuxtm3q1haewscmc',
+			'downvote'
+		);
+		console.log('result is: ', result);
 	};
 
 	return (
@@ -30,6 +91,26 @@ const orbis_write = () => {
 			<div className="my-4">
 				<Button shadow color="primary" auto onPress={createPost}>
 					create post
+				</Button>
+			</div>
+			<div className="my-4">
+				<Button shadow color="primary" auto onPress={getPost}>
+					get post
+				</Button>
+			</div>
+			<div className="my-4">
+				<Button shadow color="success" auto onPress={likePost}>
+					like the post
+				</Button>
+			</div>
+			<div className="my-4">
+				<Button shadow color="warning" auto onPress={hahaPost}>
+					react haha to the post
+				</Button>
+			</div>
+			<div className="my-4">
+				<Button shadow color="error" auto onPress={downvotePost}>
+					downvote post
 				</Button>
 			</div>
 		</div>
